@@ -1,12 +1,27 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+
+  <link rel="stylesheet" href="leaflet.css"/>
+
+  <script src="leaflet.js"></script>
+
+  <script src="jquery.min.js"></script>
+
+  <script src="serbiaWithImage.json"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
 
 /*css*/
-.pad{width:1200px;
-  height: 1920px;
+
+@font-face {
+  font-family: 'Agency FB';
+  src: URL('Agency FB.ttf') format('truetype');
+}
+
+.pad{width:775px;
+  height: 1225px;
 margin-left: auto;
 margin-right: auto;
 border-style: solid;
@@ -21,8 +36,8 @@ position: relative;
   font-size: 0px;
   border: none;
   cursor: pointer;
-  width: 140px;
-  height: 168px;
+  width: 120px;
+  height: 144px;
 
 }
 
@@ -35,17 +50,18 @@ position: relative;
   left: 20px;
   bottom: 20px;
   display: inline-block;
+  z-index: 4;
 }
 
 .pad .dropdown a img {
-width: 140px;
-height: 168px;
+  width: 120px;
+  height: 144px;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  bottom: 176px;
+  bottom: 150px;
   z-index: 1;
 }
 
@@ -62,19 +78,20 @@ height: 168px;
   width: 50px;
   height: 50px;
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 355px;
+  top: 2px;
   background-color: #4668B1;
   text-align: center;
   color:white;
   vertical-align: bottom;
-  border-radius: 0px 0px 20px 0px;
+  border-radius: 35px;
+  z-index : 2 ;
 }
 .help a {
   color:white;
   position: absolute;
-  top:12px;
-  left: 18px;
+  top:14px;
+  left: 21px;
   text-decoration: none;
   font-size:20px;
   font-family: "Agency FB";
@@ -110,9 +127,10 @@ box-shadow: black 0px 0px 5px;
   position: absolute;
   right:0px;
   display: inline-block;
-  padding: 20px;
+  padding: 15px;
   background-color:#4668B1;
   border-radius: 0px 0px 0px 20px;
+  z-index: 3;
 }
 
 .langue-content {
@@ -121,7 +139,7 @@ box-shadow: black 0px 0px 5px;
  right: 0px;
   z-index: 1;
   background-color: #4668B1;
-  padding: 20px;
+  padding: 15px;
   border-radius: 0px 0px 0px 20px;
 
 }
@@ -134,8 +152,9 @@ box-shadow: black 0px 0px 5px;
 
 .interactive-map{
   background-color: #E8E0CA;
-  width:1200px;
-  height: 1920px;
+  width:775px;
+  height: 1225px;
+  z-index: 0;
 }
 
 </style>
@@ -144,34 +163,36 @@ box-shadow: black 0px 0px 5px;
 
 
 <div class="pad">
-<div class="dropdown">
+  <div class="dropdown">
 
-  <input onclick="myFunction()" class="dropbtn" type="image" src="img/new/filtres.png">
+    <input onclick="myFunction()" class="dropbtn" type="image" src="img/new/filtres.png">
 
-  <div id="myDropdown" class="dropdown-content">
-    <a href="eco-parcour-serb.html"><img src="img//new/bouton-d.png"></a>
-    <a href="wildlife-serb.html"><img src="img/new/bouton-c.png"></a>
-    <a href="eco-sante-serb.html"><img src="img/new/bouton-b.png"></a>
+    <div id="myDropdown" class="dropdown-content">
+      <a href="eco-parcour-serb.html"><img src="img/new/bouton-d.png"></a>
+      <a href="wildlife-serb.html"><img src="img/new/bouton-c.png"></a>
+      <a href="eco-sante-serb.html"><img src="img/new/bouton-b.png"></a>
+    </div>
   </div>
-</div>
 
 
-<div class="help"><a href="#">?</a></div>
+  <div class="help"><a href="#">?</a></div>
 
 
-<div class="language">
+  <div class="language">
 
-  <input onclick="Fuctionlanguage()" class="langue" type="image" src="img/new/serb-flag.png">
+    <input onclick="Fuctionlanguage()" class="langue" type="image" src="img/new/serb-flag.png">
 
-  <div id="langue-selector" class="langue-content">
-    <a href="core-map-en.html"><img class="flag-img" src="img/new/uk-flag.png"></a>
+    <div id="langue-selector" class="langue-content">
+      <a href="index.html"><img class="flag-img" src="img/new/uk-flag.png"></a>
+    </div>
   </div>
-</div>
-<div class="interactive-map"></div>
+  <div class="interactive-map"  id='map'>
+    <script src="Cartes/Carte_principale.js"></script>
+  </div>
 
 </div>
 
-<script>png
+<script>/*png*/
 
 /*php pour les dropdownmenu*/
 /*menu de navigation*/

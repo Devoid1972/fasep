@@ -1,22 +1,22 @@
 // initialize the map
-  var map = L.map('map').setView([44, 20.4651300], 8);  
+var map = L.map('map').setView([44, 20.8], 8);
 
-  // load a tile layer
-  L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe10b/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibXVybXVyYXRpb24iLCJhIjoiY2sxN3F1Z29qMWV0dzNjcDNoaDVsODc0ciJ9.H2_bYweaK42jLplL87mE2A', {
+// load a tile layer
+L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe10b/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibXVybXVyYXRpb24iLCJhIjoiY2sxN3F1Z29qMWV0dzNjcDNoaDVsODc0ciJ9.H2_bYweaK42jLplL87mE2A', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           id: 'mapbox.streets'
-        }).addTo(map);
+}).addTo(map);
 
-  //dynamic legend
-  var info = L.control();
+//dynamic legend
+var info = L.control();
 
-  info.onAdd = function (map) {
+info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info');
     //this.update();
     return this._div;
-  };
+};
 
-  /*info.update = function (props) {
+/*info.update = function (props) {
     this._div.innerHTML = '<h5>Caractéristiques de la zone</h5>' +  (props ?
         'i_water : ' + props.Water.toLocaleString() 
         + '<br/> i_rurality :'  + props.Rurality.toLocaleString()
@@ -25,110 +25,101 @@
   };*/
   /*info.update = function (props) {
     this._div.innerHTML = '' 
-  };*/
+};*/
 
-  info.addTo(map);
+info.addTo(map);
 
-  //load shapefile
-  $.getJSON('Cartes/serbiaWithImage.json', function (data) {
-    var geojson = L.geoJson(data, {
-        style: style,
-        onEachFeature: function (feature, layer) {
-            var defaultStyle = layer.style;
+//load json
+var leMessi = Android.loadJSONFromAsset("serbiaWithImage.json");
+var serbiaWithImagejson = JSON.parse(leMessi);
 
-            layer.on('click', function (e) {
-                this.setStyle({
-                    color: 'lightblue',
-                    fillColor : 'lightblue',
-                    weight: 2,
-                    dashArray : '',
-                    fillOpacity: 0.7
-                });
-                //info.update(layer.feature.properties)
+//load shapefile
+var geojson = L.geoJson(serbiaWithImagejson, {
+    style: style,
+    onEachFeature: function (feature, layer) {
+        var defaultStyle = layer.style;
+
+        layer.on('click', function (e) {
+            geojson.resetStyle();
+            this.setStyle({
+                color: 'green',
+                fillColor : 'green',
+                weight: 2,
+                dashArray : '',
+                fillOpacity: 0.7
             });
-            layer.on('mouseout', function (e) {
-                geojson.resetStyle();
+            //info.update(layer.feature.properties)
+        });
+            //layer.on('touchend', function (e) {
+            //    geojson.resetStyle();
                 //info.update()
-            });
+            //});
            
-           var gouttes = '';
+           var goutte = '';
            if (feature.properties.Water==0) {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_0.png?raw=true'
-            } else if (feature.properties.Water<=2) {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_1.png?raw=true'
+             goutte = 'Cartes/Illu_popup/goutte_0.png'
             } else if (feature.properties.Water<=4) {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_2.png?raw=true'
+             goutte = 'Cartes/Illu_popup/goutte_1.png'
+            } else if (feature.properties.Water<=5) {
+             goutte = 'Cartes/Illu_popup/goutte_2.png'
             } else if (feature.properties.Water<=6) {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_3.png?raw=true'
-            } else if (feature.properties.Water<=8) {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_4.png?raw=true'
+             goutte = 'Cartes/Illu_popup/goutte_3.png'
+            } else if (feature.properties.Water<=7) {
+             goutte = 'Cartes/Illu_popup/goutte_4.png'
             } else {
-             gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_5.png?raw=true'
+             goutte = 'Cartes/Illu_popup/goutte_5.png'
             }
-           layer.bindPopup('<img src=' + gouttes + '/></br> Image zone protégée'+ '</br> Image urbanisation');
+
+            var arbre = '';
+            if (feature.properties.ProtectedZ==0) {
+                arbre = 'Cartes/Illu_popup/arbre_0.png'
+            } else if (feature.properties.ProtectedZ<=1) {
+                arbre = 'Cartes/Illu_popup/arbre_1.png'
+            } else if (feature.properties.ProtectedZ<=2) {
+                arbre = 'Cartes/Illu_popup/arbre_2.png'
+            } else if (feature.properties.ProtectedZ<=3) {
+                arbre = 'Cartes/Illu_popup/arbre_3.png'
+            } else if (feature.properties.ProtectedZ<=4) {
+                arbre = 'Cartes/Illu_popup/arbre_4.png'
+            } else {
+                arbre = 'Cartes/Illu_popup/arbre_5.png'
+            }
+
+            var urban = '';
+            if (feature.properties.Rurality>=9.9) {
+                urban = 'Cartes/Illu_popup/urban_0.png'
+            } else if (feature.properties.Rurality>9.1) {
+                urban = 'Cartes/Illu_popup/urban_1.png'
+            } else if (feature.properties.Rurality>8.3) {
+                urban = 'Cartes/Illu_popup/urban_2.png'
+            } else if (feature.properties.Rurality>7.5) {
+                urban = 'Cartes/Illu_popup/urban_3.png'
+            } else if (feature.properties.Rurality>7) {
+                urban = 'Cartes/Illu_popup/urban_4.png'
+            } else {
+                urban = 'Cartes/Illu_popup/urban_5.png'
+            }
+
+           layer.bindPopup('<center> TERRITORIAL HEALTH </center><hr>'
+                            //+ 'Moyenne :' + mean_mean.toLocaleString()
+                           + 'Water Pressure :'  + '<img src=' + goutte +' height="30"></br>Forest Preservation :'
+                           + '<img src=' + arbre +' height="30"></br> Urbanisation :'
+                           +  '<img src=' + urban +' height="30">', {'className' : 'popupCustom'});
         }
     }).addTo(map);
-});
 
-//geojson.bindPopup()
-//layer.bindPopup('<h1>'+feature.properties.f1+'</h1><p>name: '+feature.properties.f2+'</p>');
-
-  function style(feature) {
+function style(feature) {
     return {
-        //fillColor: 'blue',
         weight:1,
         opacity: 0,
-        //color: 'white',
         dashArray: '3',
         fillOpacity: 0
     };
 }
 
-//affichage des coordonnées sur la carte
-//var popup = L.popup();
+for (var i = 0 ; i < serbiaWithImagejson['features'].length; i++){
+    var overlay = L.imageOverlay(serbiaWithImagejson['features'][i]['properties']['pngURL_eco'],
+                              [[serbiaWithImagejson['features'][i]['properties']['LatMax_eco'],serbiaWithImagejson['features'][i]['properties']['LongMin_ec']],
+                              [serbiaWithImagejson['features'][i]['properties']['LatMin_eco'],serbiaWithImagejson['features'][i]['properties']['LongMax_ec']]]).addTo(map);
+}
 
-//function onMapClick(e) {
-//    popup
-//        .setLatLng(e.latlng)
-//        .setContent("You clicked the map at " + e.latlng.toString())
-//        .openOn(map);
-//}
-
-//function testAffichage(latIn, lonIn) {
-//    console.log(latIn,lonIn);
-//}
-//map.on('click', onMapClick);
-
-//affichage des coordonnées du click dans la console
-//map.on('click', function(e){
-//  var coord = e.latlng;
-//  lat = coord.lat;
-//  lng = coord.lng;
-//  console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
-//  testAffichage(lat,lng);
-//  });
-
-//inclure une image dans un hexagone
-//var overlay = L.imageOverlay('https://github.com/coraliecoumes/serbie/blob/master/hexa_test.png?raw=true',
-//                            [[45.94921576371568, 18.692548823758553], [45.82415604324296, 18.900005852199982]])
-//                            .addTo(map);
-
-/*$.getJSON('https://raw.githubusercontent.com/coraliecoumes/serbie/master/serbiaEcoWithURL.json', function (dataURL) {
-  
-  //var i = 1;
-  console.log(dataURL['features'].length)
-  for (var i = 0 ; i < dataURL['features'].length; i++){
-    var overlay = L.imageOverlay(dataURL['features'][i]['properties']['pngURL'],
-                              [[dataURL['features'][i]['properties']['LongMax'],dataURL['features'][i]['properties']['LatMax']],
-                              [dataURL['features'][i]['properties']['LongMin'],dataURL['features'][i]['properties']['LatMin']]]).addTo(map);
-  }
-});*/
-
-$.getJSON('Cartes/serbiaWithImage.json', function (dataURL) {
-
-  for (var i = 0 ; i < dataURL['features'].length; i++){
-    var overlay = L.imageOverlay(dataURL['features'][i]['properties']['pngURL_eco'],
-                              [[dataURL['features'][i]['properties']['LatMax_eco'],dataURL['features'][i]['properties']['LongMin_ec']],
-                              [dataURL['features'][i]['properties']['LatMin_eco'],dataURL['features'][i]['properties']['LongMax_ec']]]).addTo(map);
-  }
-});

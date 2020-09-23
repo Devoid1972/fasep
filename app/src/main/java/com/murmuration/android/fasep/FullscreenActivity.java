@@ -15,7 +15,11 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+import java.io.InputStream;
+import java.io.IOException;
+import org.json.JSONObject;
+import org.json.JSONException;
+import android.webkit.JavascriptInterface;
 
 public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
@@ -78,6 +82,18 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = (WebView) findViewById(R.id.fullscreen_content);
 
+
+      /*read json file
+       String jsonString = loadJSONFromAsset();
+       JSONObject jsonConfig;
+       try {
+                jsonConfig = new JSONObject(jsonString);
+       }
+
+       catch (JSONException e){}
+       */
+
+
         WebSettings webSettings = mContentView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
@@ -92,7 +108,10 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
+
         mContentView.loadUrl("file:///android_asset/index.html");
+        mContentView.addJavascriptInterface(new WebAppInterface(this), "Android");
+
 
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,4 +168,36 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+    public class WebAppInterface {
+        Context mContext;
+
+        /**
+         * Instantiate the interface and set the context
+         */
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        /**
+         * Show a toast from the web page
+         */
+        @JavascriptInterface
+        public String loadJSONFromAsset(String chemin) {
+            String json = null;
+            try {
+                InputStream is = getAssets().open(chemin);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                json = new String(buffer, "UTF-8");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+            return json;
+        }
+    }
+
 }
+
