@@ -1,5 +1,13 @@
 // initialize the map
-var map = L.map('map',{dragging : false}).setView([44, 20.8], 8);
+var map = L.map('map').setView([44, 20.8], 8);
+
+map.options.minZoom = 7;
+map.options.maxZoom = 11;
+map.options.bounceAtZoomLimits = false;
+map.options.zoomSnap = 1;
+map.options.touchZoom = 'center';
+map.options.zoomDelta = 1;
+//map.options.zoomControl = false;
 
 // load a tile layer
 L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe10b/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibXVybXVyYXRpb24iLCJhIjoiY2sxN3F1Z29qMWV0dzNjcDNoaDVsODc0ciJ9.H2_bYweaK42jLplL87mE2A', {
@@ -195,7 +203,7 @@ function onEachFeature(feature,layer){
         var score = goutte_score + arbre_score + urban_score
         if (score==0) {
             etoiles = 'Cartes/Illu_parcours/etoiles_0.png'
-            texte = 'Try again'
+            texte = 'Too bad'
         } else if (score<=3) {
             etoiles = 'Cartes/Illu_parcours/etoiles_1.png'
             texte = 'Try again'
@@ -207,7 +215,7 @@ function onEachFeature(feature,layer){
             texte = 'Good!'
         } else if (score<=12) {
             etoiles = 'Cartes/Illu_parcours/etoiles_4.png'
-            texte = 'Bravo!'
+            texte = 'Nice job!'
         } else {
             etoiles = 'Cartes/Illu_parcours/etoiles_5.png'
             texte = 'Perfect!'

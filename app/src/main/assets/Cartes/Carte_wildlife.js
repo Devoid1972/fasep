@@ -1,6 +1,13 @@
 // initialize the map
 var map = L.map('map').setView([44, 20.8], 8);
 
+map.options.minZoom = 7;
+map.options.maxZoom = 11;
+map.options.bounceAtZoomLimits = false;
+map.options.zoomSnap = 1;
+map.options.touchZoom = 'center';
+map.options.zoomDelta = 1;
+
 var nomAnimal= '';
 mapMarkers = [];
 
