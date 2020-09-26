@@ -15,8 +15,11 @@ L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe
           id: 'mapbox.streets'
 }).addTo(map);
 
+
 if (L.Browser.touch) {
-    L.control.touchHover().addTo(map);
+    var drawerControl = new L.control.touchHover();
+    drawerControl.addTo(map);
+    drawerControl._toggle(new Event("click"));
 }
 
 L.Path.CLIP_PADDING = 0.12;
