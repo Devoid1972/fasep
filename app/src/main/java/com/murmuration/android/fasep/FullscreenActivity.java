@@ -1,27 +1,21 @@
 package com.murmuration.android.fasep;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import java.io.InputStream;
 import java.io.IOException;
-import org.json.JSONObject;
-import org.json.JSONException;
-import android.webkit.JavascriptInterface;
+import java.io.InputStream;
 
 public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
@@ -109,15 +103,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        mContentView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                android.util.Log.d("WebView", consoleMessage.message());
-                return true;
-            }
-        });
-
 
         mContentView.loadUrl("file:///android_asset/index.html");
         mContentView.addJavascriptInterface(new WebAppInterface(this), "Android");
