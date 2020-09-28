@@ -104,7 +104,8 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-        mContentView.loadUrl("file:///android_asset/index.html");
+        //mContentView.loadUrl("file:///android_asset/index.html");
+        mContentView.loadUrl("file:///android_asset/tuto/tuto-page-4.html");
         mContentView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
 
