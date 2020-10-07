@@ -7,7 +7,6 @@ map.options.bounceAtZoomLimits = false;
 map.options.zoomSnap = 1;
 map.options.touchZoom = 'center';
 map.options.zoomDelta = 1;
-//map.options.zoomControl = false;
 
 // load a tile layer
 L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe10b/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibXVybXVyYXRpb24iLCJhIjoiY2sxN3F1Z29qMWV0dzNjcDNoaDVsODc0ciJ9.H2_bYweaK42jLplL87mE2A', {
@@ -52,18 +51,6 @@ class select_cells {
 
   }
 };
-
-//roads layer
-/*$.getJSON('https://raw.githubusercontent.com/coraliecoumes/serbie/master/SRB_roads.json', function (dataroad) {
-  L.geoJson(dataroad,{
-    style : function(feature){
-      return{
-        color : 'grey',
-        weight: 2
-      };
-    }
-  }).addTo(map);
-});*/
 
 var dessin = false;
 var cells = [];
@@ -119,21 +106,6 @@ function onEachFeature(feature,layer){
         mean_rurality /= 3*cells.length;
         mean_protect /= cells.length;
         mean_mean = mean_mean/(7*cells.length);
-
-        /*var gouttes = '';
-        if (mean_water==0) {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_0.png?raw=true'
-        } else if (mean_water<=2) {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_1.png?raw=true'
-        } else if (mean_water<=4) {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_2.png?raw=true'
-        } else if (mean_water<=6) {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_3.png?raw=true'
-        } else if (mean_water<=8) {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_4.png?raw=true'
-        } else {
-            gouttes = 'https://github.com/coraliecoumes/serbie/blob/master/gouttes_5.png?raw=true'
-        }*/
 
         var goutte = '';
         var goutte_score = 0
@@ -229,7 +201,6 @@ function onEachFeature(feature,layer){
             .setContent('<font size = "13"> <center>' + texte +'</center> </font>' //+'</br>'
                         + '<center><img src=' + etoiles +'></center>'
                         + '</br> <hr> <center> TERRITORIAL HEALTH </center><hr>'
-                        //+ 'Moyenne :' + mean_mean.toLocaleString()
                         + 'Water Pressure :'  + '<img src=' + goutte +' height="30"></br>Forest Preservation :'
                         + '<img src=' + arbre +' height="30"></br> Urbanisation :'
                         +  '<img src=' + urban +' height="30">')

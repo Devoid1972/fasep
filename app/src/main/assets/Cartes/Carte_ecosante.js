@@ -19,20 +19,8 @@ var info = L.control();
 
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info');
-    //this.update();
     return this._div;
 };
-
-/*info.update = function (props) {
-    this._div.innerHTML = '<h5>Caractéristiques de la zone</h5>' +  (props ?
-        'i_water : ' + props.Water.toLocaleString() 
-        + '<br/> i_rurality :'  + props.Rurality.toLocaleString()
-        + '<br/> i_protect :'  + props.ProtectedZ.toLocaleString()
-        : 'Passer la souris sur une zone');
-  };*/
-  /*info.update = function (props) {
-    this._div.innerHTML = '' 
-};*/
 
 info.addTo(map);
 
@@ -55,12 +43,7 @@ var geojson = L.geoJson(serbiaWithImagejson, {
                 dashArray : '',
                 fillOpacity: 0.7
             });
-            //info.update(layer.feature.properties)
         });
-            //layer.on('touchend', function (e) {
-            //    geojson.resetStyle();
-                //info.update()
-            //});
            
            var goutte = '';
            if (feature.properties.Water==0) {
@@ -108,7 +91,6 @@ var geojson = L.geoJson(serbiaWithImagejson, {
             }
 
            layer.bindPopup('<center> TERRITORIAL HEALTH </center><hr>'
-                            //+ 'Moyenne :' + mean_mean.toLocaleString()
                            + 'Water Pressure :'  + '<img src=' + goutte +' height="30"></br>Forest Preservation :'
                            + '<img src=' + arbre +' height="30"></br> Urbanisation :'
                            +  '<img src=' + urban +' height="30">', {'className' : 'popupCustom'});
