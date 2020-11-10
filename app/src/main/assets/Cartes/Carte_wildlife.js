@@ -12,7 +12,7 @@ var nomAnimal= '';
 mapMarkers = [];
 
 //load wildlife data
-var datawild = Android.loadJSONFromAsset('animaux_vegetaux.json');
+var datawild = Android.loadJSONFromAsset('Data/animaux_vegetaux.json');
 var datawildjson = JSON.parse(datawild);
 
 //marker clusters for selected filter
@@ -42,9 +42,9 @@ function doalert(obj) {
 
   for(var i = 0; i < datawildjson.length; i++){
     if (datawildjson[i].url == nomAnimal) {
-        var marker = L.marker([datawildjson[i].decimalLatitude, datawildjson[i].decimalLongitude], {icon: animalIcon});
+        var marker = L.marker([datawildjson[i].decimalLatitude, datawildjson[i].decimalLongitude], {icon: animalIcon}).addTo(map);
         $('.description').html('<h3>'+ datawildjson[i].species_en +' :</h3>'+"<p>"+datawildjson[i].description_en+"</p>");
-        markers.addLayer(marker);
+        //markers.addLayer(marker);
         mapMarkers.push(marker);
     }
   }
@@ -61,8 +61,35 @@ L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe
           id: 'mapbox.streets'
 }).addTo(map);
 
+//load countries around serbia json
+var countries_around = Android.loadJSONFromAsset('Data/Serbia_pays_frontalier.geojson');
+var serbia_pays_frontalier = JSON.parse(countries_around);
+
+L.geoJSON(serbia_pays_frontalier,{
+    style:stylepays,
+    onEachFeature : function (feature, layer){
+        var label = L.marker(feature.properties.coor_label,{
+            icon : L.divIcon({
+                className : 'label',
+                html : feature.properties.ADMIN,
+                iconSize:[100,40]
+            })
+        }).addTo(map);
+    }
+}).addTo(map);
+
+function stylepays(feature) {
+    return {
+        weight:2,
+        opacity: 1,
+        color: '#444444',
+        dashArray: '0',
+        fillOpacity: 0
+    };
+}
+
 //load json
-var leMessi = Android.loadJSONFromAsset('serbiaWithImage.json');
+var leMessi = Android.loadJSONFromAsset('Data/serbiaWithImage.json');
 var serbiaWithImagejson = JSON.parse(leMessi);
 
 //polygon layer
@@ -80,14 +107,14 @@ function style(feature) {
         opacity: 0.2,
         color: 'grey',
         dashArray: '3',
-        fillOpacity: 0.2}
+        fillOpacity: 1}
 }
 
 function getColor(d) {
-    return d == 'Cartes/Bio_carte_principale/Tile-Foret@300x.png'  ? '#4C5B2D' :
-           d == 'Cartes/Bio_carte_principale/Tile-Champ@300x.png'  ? '#EDEF46' :
-           d == 'Cartes/Bio_carte_principale/Tile-Urban@300x.png'  ? '#666666' :
-           d == 'Cartes/Bio_carte_principale/Tile-Rural@300x.png'  ? '#999999' :
-           d == 'Cartes/Bio_carte_principale/Tile-Montagne@300x.png'   ? '#FFFFFF' :
-                      '#99C25A';
+    return d == 'Cartes/Bio_carte_principale/Tile-Foret@300x.png'  ? '#B7B99A' :
+           d == 'Cartes/Bio_carte_principale/Tile-Champ@300x.png'  ? '#E8E89D' :
+           d == 'Cartes/Bio_carte_principale/Tile-Urban@300x.png'  ? '#C1BCAB' :
+           d == 'Cartes/Bio_carte_principale/Tile-Rural@300x.png'  ? '#D1CBBB' :
+           d == 'Cartes/Bio_carte_principale/Tile-Montagne@300x.png'   ? '#F0EAD9' :
+                      '#CBDAA7';
 }

@@ -2,17 +2,17 @@
 <html>
 <head>
 
-  <link rel="stylesheet" href="leaflet.css"/>
+  <link rel="stylesheet" href="Css/leaflet.css"/>
    
-  <script src="leaflet.js"></script>
+  <script src="JSLibrary/leaflet.js"></script>
 
-  <script src="jquery.min.js"></script>
+  <script src="JSLibrary/jquery.min.js"></script>
 
-  <script src="leaflet.markercluster.js"></script>
+  <script src="JSLibrary/leaflet.markercluster.js"></script>
 
-  <link rel="stylesheet" href="MarkerCluster.css" />
+  <link rel="stylesheet" href="Css/MarkerCluster.css" />
 
-  <link rel="stylesheet" href="MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="Css/MarkerCluster.Default.css" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -20,17 +20,17 @@
 /*css*/
 @font-face {
   font-family: 'caviar dreams';
-  src: URL('CaviarDreams.ttf') format('truetype');
+  src: URL('Fonts/CaviarDreams.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'caviar dreams bold';
-  src: URL('CaviarDreams_Bold.ttf') format('truetype');
+  src: URL('Fonts/CaviarDreams_Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Agency FB';
-  src: URL('Agency FB.ttf') format('truetype');
+  src: URL('Fonts/Agency FB.ttf') format('truetype');
 }
 
 
@@ -247,6 +247,20 @@ div.scrollmenu a:hover {
   z-index: 0;
 }
 
+.map-title{
+	position : absolute;
+	top: 60px;
+	right : 150px;
+	z-index : 1;
+}
+
+.map-title h1{
+	font-family: "Agency FB";
+	color:#444444;
+  text-shadow: 10px 10px 10px rgba(255, 255, 255, 1),
+              -10px -10px 10px rgba(255, 255, 255, 1);
+}
+
 .selected{background-color: #4668B1}
 
 .description{
@@ -273,6 +287,52 @@ div.scrollmenu a:hover {
 
 }
 
+.explanation-button{
+  position: absolute;
+  background-color: #4668B1;
+  border-radius: 20px 0px 0px 20px;
+  border: none;
+  width:30px;
+  height:100px;
+  z-index:10;
+  right:0%;
+  top:50%;
+  font-size:20px;
+  font-family: "Agency FB";
+  font-weight:bold;
+  color:white;
+}
+
+.explanation-text{
+  position:absolute;
+  background-color: #E8E0CA;
+  border-color:#444444;
+  border-width: 1px;
+  border-radius: 20px;
+  border-style: solid;
+  padding:20px;
+  width: 367px;
+  right:40px;
+  height:430px;
+  top:33%;
+  z-index:10;
+  font-size:14px;
+  font-family: caviar dreams;
+  color: #444444;
+  position: absolute;
+}
+
+
+.label{
+  font-family:"Agency FB";
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #444444;
+  text-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5),
+              -3px 10px 12px rgba(0, 0, 0, 0.5);
+}
+
 </style>
 </head>
 <body>
@@ -293,6 +353,19 @@ div.scrollmenu a:hover {
 <div class="help"><a href="tuto/tuto-page-1.html">?</a></div>
 
 <div class=logo><img src=img/new/logo_appli.png width="50"></div>
+
+<button onclick="ShowAndHide()"class = "explanation-button"> < </button>
+
+<div id="explanation" class="explanation-text">
+  <p>On this map, we studied data between 2000 and 2020 from the Global Biodiversity Information Facility, an international network and data infrastructure funded by the world's governments and aimed at providing anyone, anywhere, open access to data about all types of life on Earth.</p>
+
+  <p>Coordinated through its Secretariat in Copenhagen, the GBIF network of participating countries and organizations, working through participant nodes, provides data-holding institutions around the world with common standards and open-source tools that enable them to share information about where and when species have been recorded. This knowledge derives from many sources, including everything from museum specimens collected in the 18th and 19th century to geotagged smartphone photos shared by amateur naturalists in recent days and weeks.</p>
+
+  <p>Click on ? to get help.</p>
+
+  <p>Click on the arrow on the right to close this window.</p>
+
+</div>
 
 <div class="language">
 
@@ -338,6 +411,10 @@ div.scrollmenu a:hover {
   </div>
 </div>
 
+<div class='map-title'>
+  <h1> WILD-LIFE </h1>
+</div>
+
 <div class="interactive-map" id="map">
   <script src="Cartes/Carte_wildlife.js"></script>
 </div>
@@ -379,6 +456,15 @@ window.onclick = function(event) {
         openlanguage.classList.remove('show');
       }
     }
+  }
+}
+
+function ShowAndHide() {
+  var x = document.getElementById("explanation");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
   }
 }
 

@@ -38,9 +38,98 @@ info.update = function (props) {
 
 info.addTo(map);
 
+//load countries around serbia json
+var countries_around = Android.loadJSONFromAsset('Data/Serbia_pays_frontalier.geojson');
+var serbia_pays_frontalier = JSON.parse(countries_around);
+
+L.geoJSON(serbia_pays_frontalier,{
+    style:stylepays,
+    onEachFeature : function (feature, layer){
+        var label = L.marker(feature.properties.coor_label,{
+            icon : L.divIcon({
+                className : 'label',
+                html : feature.properties.ADMIN,
+                iconSize:[100,40]
+            })
+        }).addTo(map);
+    }
+}).addTo(map);
+
+function stylepays(feature) {
+    return {
+        weight:2,
+        opacity: 1,
+        color: '#444444',
+        dashArray: '0',
+        fillOpacity: 0
+    };
+}
+
 //load json
-var leMessi = Android.loadJSONFromAsset('serbiaWithImage.json');
+var leMessi = Android.loadJSONFromAsset('Data/serbiaWithImage.json');
 var serbiaWithImagejson = JSON.parse(leMessi);
+
+L.geoJson(serbiaWithImagejson, {
+    style : styledupays
+}).addTo(map);
+
+function styledupays(feature) {
+    return {
+        fillColor: getColor(feature.properties.pngURL_pri),
+        weight: 1,
+        opacity: 0.2,
+        color: 'grey',
+        dashArray: '3',
+        fillOpacity: 1}
+}
+
+function getColor(d) {
+    return d == 'Cartes/Bio_carte_principale/Tile-Foret@300x.png'  ? '#B7B99A' :
+           d == 'Cartes/Bio_carte_principale/Tile-Champ@300x.png'  ? '#E8E89D' :
+           d == 'Cartes/Bio_carte_principale/Tile-Urban@300x.png'  ? '#C1BCAB' :
+           d == 'Cartes/Bio_carte_principale/Tile-Rural@300x.png'  ? '#D1CBBB' :
+           d == 'Cartes/Bio_carte_principale/Tile-Montagne@300x.png'   ? '#F0EAD9' :
+                      '#CBDAA7';
+}
+
+//load road layer
+var roads = Android.loadJSONFromAsset('Data/SRB_roads.json');
+var serbia_roads = JSON.parse(roads);
+
+L.geoJson(serbia_roads,{
+                          style : function(feature){
+                            return{
+                              color : '#767676',
+                              weight: 1
+                            };
+                          }
+                        }).addTo(map);
+
+//add city labels layer
+var data_points = {
+"type": "FeatureCollection",
+"name": "Serbia_villes_principales",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "is_in_coun": "Serbia", "name": "Нови Сад", "name_en": "Novi Sad", "name_fr": "Novi Sad", "name_sr-La": "Novi Sad", "place": "city", "population": 250439.0 }, "geometry": { "type": "Point", "coordinates": [ 19.8451756, 45.2551338 ] } },
+{ "type": "Feature", "properties": { "is_in_coun": "Serbia", "name": "Београд", "name_en": "Belgrade", "name_fr": "Belgrade", "name_sr-La": "Beograd", "place": "city", "population": 1166763.0 }, "geometry": { "type": "Point", "coordinates": [ 20.4568974, 44.8178131 ] } },
+{ "type": "Feature", "properties": { "is_in_coun": "Serbia", "name": "Ниш", "name_en": "Niš", "name_fr": "Niš", "name_sr-La": "Niš", "place": "city", "population": 183164.0 }, "geometry": { "type": "Point", "coordinates": [ 21.8959232, 43.3211301 ] } },
+{ "type": "Feature", "properties": { "is_in_coun": "Serbia", "name": "Крагујевац", "name_en": "Kragujevac", "name_fr": "Kragujevac", "name_sr-La": "Kragujevac", "place": "city", "population": 150835.0 }, "geometry": { "type": "Point", "coordinates": [ 20.91877, 44.0125745 ] } },
+{ "type": "Feature", "properties": { "is_in_coun": "Kosovo", "name": "Prishtinë", "name_en": "Pristina", "name_fr": "Pristina", "name_sr-La": "Priština", "place": "city", "population": 145149.0 }, "geometry": { "type": "Point", "coordinates": [ 21.1640849, 42.6638771 ] } }
+]
+}
+
+var pointLayer = L.geoJSON(null, {
+  pointToLayer: function(feature,latlng){
+    label = String(feature.properties['name_sr-La'])
+    return new L.CircleMarker(latlng, {
+      radius: 0.001, color: 'grey'
+    }).bindTooltip(label, {permanent: true, direction: "center", className: "my-labels"}).openTooltip();
+    }
+  });
+pointLayer.addData(data_points);
+map.addLayer(pointLayer);
+
 
 //cell class to store all selected polygons info
 class select_cells {
@@ -238,8 +327,8 @@ var greenIcon = L.icon({
     popupAnchor:  [0, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-for (var i = 0 ; i < serbiaWithImagejson['features'].length; i++){
-    var overlay = L.imageOverlay(serbiaWithImagejson['features'][i]['properties']['pngURL_pri'],
-                              [[serbiaWithImagejson['features'][i]['properties']['LatMax_pri'],serbiaWithImagejson['features'][i]['properties']['LongMin_pr']],
-                              [serbiaWithImagejson['features'][i]['properties']['LatMin_pri'],serbiaWithImagejson['features'][i]['properties']['LongMax_pr']]]).addTo(map);
-}
+//for (var i = 0 ; i < serbiaWithImagejson['features'].length; i++){
+//    var overlay = L.imageOverlay(serbiaWithImagejson['features'][i]['properties']['pngURL_pri'],
+//                              [[serbiaWithImagejson['features'][i]['properties']['LatMax_pri'],serbiaWithImagejson['features'][i]['properties']['LongMin_pr']],
+//                              [serbiaWithImagejson['features'][i]['properties']['LatMin_pri'],serbiaWithImagejson['features'][i]['properties']['LongMax_pr']]]).addTo(map);
+//}

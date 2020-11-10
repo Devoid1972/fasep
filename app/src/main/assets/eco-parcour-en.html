@@ -2,22 +2,35 @@
 <html>
 <head>
 
-  <link rel="stylesheet" href="leaflet.css"/>
+  <link rel="stylesheet" href="Css/leaflet.css"/>
    
-  <script src="leaflet.js"></script>
+  <script src="JSLibrary/leaflet.js"></script>
 
-  <script src="jquery.min.js"></script>
+  <script src="JSLibrary/jquery.min.js"></script>
 
-  <script src="Control.TouchHover.js"></script>
+  <script src="JSLibrary/Control.TouchHover.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+
 <style>
 
 /*css*/
 
 @font-face {
   font-family: 'Agency FB';
-  src: URL('Agency FB.ttf') format('truetype');
+  src: URL('Fonts/Agency FB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'caviar dreams';
+  src: URL('Fonts/CaviarDreams.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'caviar dreams bold';
+  src: URL('Fonts/CaviarDreams_Bold.ttf') format('truetype');
 }
 
 .pad{width:775px;
@@ -166,12 +179,81 @@ box-shadow: black 0px 0px 5px;
   z-index: 0;
 }
 
+.map-title{
+	position : absolute;
+	top: 60px;
+	right : 150px;
+	z-index : 1;
+}
+
+.map-title h1{
+	font-family: "Agency FB";
+	color:#444444;
+	text-shadow: 10px 10px 10px rgba(255, 255, 255, 1),
+              -10px -10px 10px rgba(255, 255, 255, 1);
+}
+
 .popupCustom .leaflet-popup-tip,
 .popupCustom .leaflet-popup-content-wrapper {
     background: #3F3F40;
     color: #FEFEFE;
     width : 300px;
     font-family:"Agency FB";
+}
+
+.explanation-button{
+  position: absolute;
+  background-color: #4668B1;
+  border-radius: 20px 0px 0px 20px;
+  border: none;
+  width:30px;
+  height:100px;
+  z-index:10;
+  right:0%;
+  top:50%;
+  font-size:20px;
+  font-family: "Agency FB";
+  font-weight:bold;
+  color:white;
+}
+
+.explanation-text{
+  position:absolute;
+  background-color: #E8E0CA;
+  border-color:#444444;
+  border-width: 1px;
+  border-radius: 20px;
+  border-style: solid;
+  padding:20px;
+  width: 367px;
+  right:40px;
+  height:190px;
+  top:45%;
+  z-index:10;
+  font-size:14px;
+  font-family: caviar dreams;
+  color: #444444;
+  position: absolute;
+}
+
+.leaflet-tooltip.my-labels {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+  font-family: "Agency FB";
+  font-weight: bold;
+  font-size: 24px;
+  color: #444444;
+  }
+
+.label{
+  font-family:"Agency FB";
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #444444;
+  text-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5),
+              -3px 10px 12px rgba(0, 0, 0, 0.5);
 }
 
 </style>
@@ -196,6 +278,18 @@ box-shadow: black 0px 0px 5px;
 
 <div class=logo><img src=img/new/logo_appli.png width="50"></div>
 
+  <button onclick="ShowAndHide()"class = "explanation-button"> < </button>
+
+  <div id="explanation" class="explanation-text">
+    <p>The goal of this map is to find a greenway. You have to find the greenest track and get the best score possible on your daily travel, or your vacation trip for example.
+      The score is the mean of the three indicators on the eco-health map along the track.</p>
+
+    <p> Click on ? to get help.</p>
+
+    <p>Click on the arrow on the right to close this window.</p>
+
+  </div>
+
 <div class="language">
 
   <input onclick="Fuctionlanguage()" class="langue" type="image" src="img/new/uk-flag.png">
@@ -204,6 +298,11 @@ box-shadow: black 0px 0px 5px;
     <a href="eco-parcour-serb.html"><img class="flag-img" src="img/new/serb-flag.png"></a>
   </div>
 </div>
+
+<div class='map-title'>
+  <h1> ECO-TRACK </h1>
+</div>
+
 <div class="interactive-map" id='map'>
   <script src="Cartes/Carte_parcours.js"></script>
 </div>
@@ -249,7 +348,14 @@ window.onclick = function(event) {
   }
 }
 
-
+function ShowAndHide() {
+  var x = document.getElementById("explanation");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
 
 </script>
 

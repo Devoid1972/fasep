@@ -1,0 +1,61 @@
+body{
+	margin: 0px;
+	padding: 0px;
+}
+figure{
+	height: 1024px;
+	width: 768px;
+	border-style: solid;
+}
+ 
+nav > ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+nav li {
+	list-style-type: none;
+	position:absolute;
+	bottom:-50px;
+	left: 80px;
+
+}
+
+nav ul {  }
+.menu{
+	display: none;
+}
+
+nav li:active .menu{display: inline-block;
+	position: absolute;
+	top: 0%;
+	left: -50px;
+	padding: 0px; 
+}
+
+nav li:checked .menu{display: inline-block;
+	position: absolute;
+	top: 0%;
+	left: -50px;
+	padding: 0px; 
+}
+
+.I1 {display: inline-block;
+	position: absolute;
+	bottom: 10px;
+	left: 50px;
+	padding: 0px; 
+}
+
+.I2 {display: inline-block;
+	position: absolute;
+	bottom: 150px;
+	left: 50px;
+	padding: 0px; 
+}
+.I3 {display: inline-block;
+	position: absolute;
+	bottom: 290px;
+	left: 50px;
+	padding: 0px; 
+}

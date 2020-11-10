@@ -2,22 +2,35 @@
 <html>
 <head>
 
-  <link rel="stylesheet" href="leaflet.css"/>
+  <link rel="stylesheet" href="Css/leaflet.css"/>
    
-  <script src="leaflet.js"></script>
+  <script src="JSLibrary/leaflet.js"></script>
 
-  <script src="jquery.min.js"></script>
+  <script src="JSLibrary/jquery.min.js"></script>
 
   <script src="serbiaWithImage.json"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+
 <style>
 
 /*css*/
 
 @font-face {
   font-family: 'Agency FB';
-  src: URL('Agency FB.ttf') format('truetype');
+  src: URL('Fonts/Agency FB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'caviar dreams';
+  src: URL('Fonts/CaviarDreams.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'caviar dreams bold';
+  src: URL('Fonts/CaviarDreams_Bold.ttf') format('truetype');
 }
 
 .pad{width:775px;
@@ -163,6 +176,75 @@ box-shadow: black 0px 0px 5px;
   z-index: 0;
 }
 
+.map-title{
+	position : absolute;
+	top: 60px;
+	right : 150px;
+	z-index : 1;
+}
+
+.map-title h1{
+	font-family: "Agency FB";
+	color:#444444;
+	text-shadow: 10px 10px 10px rgba(255, 255, 255, 1),
+              -10px -10px 10px rgba(255, 255, 255, 1);
+}
+
+.explanation-button{
+  position: absolute;
+  background-color: #4668B1;
+  border-radius: 20px 0px 0px 20px;
+  border: none;
+  width:30px;
+  height:100px;
+  z-index:10;
+  right:0%;
+  top:50%;
+  font-size:20px;
+  font-family: "Agency FB";
+  font-weight:bold;
+  color:white;
+}
+
+.explanation-text{
+  position:absolute;
+  background-color: #E8E0CA;
+  border-color:#444444;
+  border-width: 1px;
+  border-radius: 20px;
+  border-style: solid;
+  padding:20px;
+  width: 367px;
+  right:40px;
+  height:480px;
+  top:33%;
+  z-index:10;
+  font-size:14px;
+  font-family: caviar dreams;
+  color: #444444;
+  position: absolute;
+}
+
+.leaflet-tooltip.my-labels {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+  font-family: "Agency FB";
+  font-weight: bold;
+  font-size: 24px;
+  color: #444444;
+  }
+
+.label{
+  font-family:"Agency FB";
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #444444;
+  text-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5),
+              -3px 10px 12px rgba(0, 0, 0, 0.5);
+}
+
 </style>
 </head>
 <body>
@@ -185,6 +267,26 @@ box-shadow: black 0px 0px 5px;
 
 <div class=logo><img src=img/new/logo_appli.png width="50"></div>
 
+<button onclick="ShowAndHide()"class = "explanation-button"> < </button>
+
+<div id="explanation" class="explanation-text">
+  <p>MURMURATION is a company that provides environemental studies all over the world using artificial intelligence and big data techniques to analyse data from satellites and other data sources.</p>
+
+  <p> On this first map, we use data from Copernicus and the Sentinel 2 satellite to detect the land cover in a 20 square kilometers area. Here, we choose to detect :</p>
+
+  <img src="Cartes/Bio_carte_principale/Tile-Urban@300x.png" style="margin-left:70px;" width='30px'> urban, <br>
+  <img src="Cartes/Bio_carte_principale/Tile-Champ@300x.png" style="margin-left:70px;" width='30px'> agricultural, <br>
+  <img src="Cartes/Bio_carte_principale/Tile-Montagne@300x.png" style="margin-left:70px;" width='30px'> mountain, <br>
+  <img src="Cartes/Bio_carte_principale/Tile-Foret@300x.png" style="margin-left:70px;" width='30px'> forest, <br>
+  <img src="Cartes/Bio_carte_principale/Tile-Foret-Montagne@300x.png" style="margin-left:70px;" width='30px'> mountainous forest, <br>
+  <img src="Cartes/Bio_carte_principale/Tile-Rural@300x.png" style="margin-left:70px;" width='30px'> rural areas. <br>
+
+  <p>Click on ? to get help.</p>
+
+  <p>Click on the arrow on the right to close this window and start your discovery of Serbia.</p>
+
+</div>
+
 <div class="language">
 
   <input onclick="Fuctionlanguage()" class="langue" type="image" src="img/new/uk-flag.png">
@@ -192,6 +294,10 @@ box-shadow: black 0px 0px 5px;
   <div id="langue-selector" class="langue-content">
     <a href="core-map-serb.html"><img class="flag-img" src="img/new/serb-flag.png"></a>
   </div>
+</div>
+
+<div class='map-title'>
+  <h1> MAIN MAP </h1>
 </div>
 
 <div class="interactive-map" id='map'>
@@ -236,6 +342,16 @@ window.onclick = function(event) {
     }
   }
 }
+
+function ShowAndHide() {
+  var x = document.getElementById("explanation");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
 </script>
 
 

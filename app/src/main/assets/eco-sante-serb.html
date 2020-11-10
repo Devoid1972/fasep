@@ -2,11 +2,11 @@
 <html>
 <head>
 
-  <link rel="stylesheet" href="leaflet.css"/>
+  <link rel="stylesheet" href="Css/leaflet.css"/>
 
-  <script src="leaflet.js"></script>
+  <script src="JSLibrary/leaflet.js"></script>
 
-  <script src="jquery.min.js"></script>
+  <script src="JSLibrary/jquery.min.js"></script>
 
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'Agency FB';
-  src: URL('Agency FB.ttf') format('truetype');
+  src: URL('Fonts/Agency FB.ttf') format('truetype');
 }
 
 .pad{width:775px;
@@ -212,6 +212,65 @@ box-shadow: black 0px 0px 5px;
   z-index: 0;
 }
 
+.map-title{
+	position : absolute;
+	top: 60px;
+	right : 150px;
+	z-index : 1;
+}
+
+.map-title h1{
+	font-family: "Agency FB";
+	color:#444444;
+	text-shadow: 10px 10px 10px rgba(255, 255, 255, 1),
+              -10px -10px 10px rgba(255, 255, 255, 1);
+}
+
+.explanation-button{
+  position: absolute;
+  background-color: #4668B1;
+  border-radius: 20px 0px 0px 20px;
+  border: none;
+  width:30px;
+  height:100px;
+  z-index:10;
+  right:0%;
+  top:50%;
+  font-size:20px;
+  font-family: "Agency FB";
+  font-weight:bold;
+  color:white;
+}
+
+.explanation-text{
+  position:absolute;
+  background-color: #E8E0CA;
+  border-color:#444444;
+  border-width:1px;
+  border-radius: 20px;
+  border-style: solid;
+  padding:20px;
+  width: 367px;
+  right:40px;
+  height:850px;
+  top:13%;
+  z-index:10;
+  font-size:14px;
+  font-family: caviar dreams;
+  color: #444444;
+  position: absolute;
+}
+
+.label{
+  font-family:"Agency FB";
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #444444;
+  text-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5),
+              -3px 10px 12px rgba(0, 0, 0, 0.5);
+}
+
 </style>
 </head>
 <body>
@@ -233,6 +292,41 @@ box-shadow: black 0px 0px 5px;
 
   <div class=logo><img src=img/new/logo_appli.png width="50"></div>
 
+  <button onclick="ShowAndHide()"class = "explanation-button"> < </button>
+
+  <div id="explanation" class="explanation-text">
+
+    <p> On this map, we used three indicators :</p>
+
+    <center><img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'> Water management<img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'></center>
+
+    <p> Calculated from Aqueduct Global Maps 3.0 (Overall Water Risk layer). The different risk levels from 0 to 5 are reduced from 0 to 10 and then intersected with a hexagonal mesh of 20 km on the side which calculates the average of all the pixels of the mesh.</p>
+
+    <center><img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'> Protected areas<img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'></center>
+
+    <p> Calculated from the World Database on Protected Area. A weighting game is used to calculate the weights of the International, National or Regional protected areas (excluding only maritime areas). The rating is even stronger if the space has several levels of protection.</p>
+
+    <center><img src="Cartes/Illu_popup/Picto-urban.png" width='30px'> Urbanisation<img src="Cartes/Illu_popup/Picto-urban.png" width='30px'></center>
+
+    <p> Calculated from GHS-SMOD data at one km resolution. The values of urban densities are noted from 0 to 10 then one intersects with a hexagonal mesh of 20km of side which calculates the average of all the pixels of the mesh.</p>
+
+    <p> We then used the mean value of those three indicators in a polygon to plot the health level of a zone : </p>
+
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-A@300x.png" style="margin-left:70px;" width='30px'> level A (mean greater than 6.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-B@300x.png" style="margin-left:70px;" width='30px'> level B (mean between 5.5 and 6.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-C@300x.png" style="margin-left:70px;" width='30px'> level C (mean between 4.8 and 5.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-D@300x.png" style="margin-left:70px;" width='30px'> level D (mean between 4.1 and 4.8), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-E@300x.png" style="margin-left:70px;" width='30px'> level E (mean less than 4.1). <br>
+
+    <p> Click on a polygon to get details </p>
+
+    <p>Click on ? to get help.</p>
+
+    <p>Click on the arrow on the right to close this window.</p>
+
+  </div>
+
+
   <div class="language">
 
     <input onclick="Fuctionlanguage()" class="langue" type="image" src="img/new/serb-flag.png">
@@ -246,6 +340,10 @@ box-shadow: black 0px 0px 5px;
     <h3><div class="title-legend">LEGENDA</div></h3>
 
     <img src="img/new/eco-sante-legend-serb.png">
+  </div>
+
+  <div class='map-title'>
+    <h1> EKO-ZDRAVLJE </h1>
   </div>
 
   <div class="interactive-map" id='map'>
@@ -290,6 +388,15 @@ window.onclick = function(event) {
         openlanguage.classList.remove('show');
       }
     }
+  }
+}
+
+function ShowAndHide() {
+  var x = document.getElementById("explanation");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
   }
 }
 </script>

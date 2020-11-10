@@ -14,6 +14,33 @@ L.tileLayer('https://api.mapbox.com/styles/v1/murmuration/ck2afd4vj24h01cs4gvvhe
           id: 'mapbox.streets'
 }).addTo(map);
 
+//load countries around serbia json
+var countries_around = Android.loadJSONFromAsset('Data/Serbia_pays_frontalier.geojson');
+var serbia_pays_frontalier = JSON.parse(countries_around);
+
+L.geoJSON(serbia_pays_frontalier,{
+    style:stylepays,
+    onEachFeature : function (feature, layer){
+        var label = L.marker(feature.properties.coor_label,{
+            icon : L.divIcon({
+                className : 'label',
+                html : feature.properties.ADMIN,
+                iconSize:[100,40]
+            })
+        }).addTo(map);
+    }
+}).addTo(map);
+
+function stylepays(feature) {
+    return {
+        weight:2,
+        opacity: 1,
+        color: '#444444',
+        dashArray: '0',
+        fillOpacity: 0
+    };
+}
+
 //dynamic legend
 var info = L.control();
 
@@ -24,8 +51,9 @@ info.onAdd = function (map) {
 
 info.addTo(map);
 
+
 //load json
-var leMessi = Android.loadJSONFromAsset("serbiaWithImage.json");
+var leMessi = Android.loadJSONFromAsset("Data/serbiaWithImage.json");
 var serbiaWithImagejson = JSON.parse(leMessi);
 
 //load shapefile
@@ -109,6 +137,6 @@ function style(feature) {
 for (var i = 0 ; i < serbiaWithImagejson['features'].length; i++){
     var overlay = L.imageOverlay(serbiaWithImagejson['features'][i]['properties']['pngURL_eco'],
                               [[serbiaWithImagejson['features'][i]['properties']['LatMax_eco'],serbiaWithImagejson['features'][i]['properties']['LongMin_ec']],
-                              [serbiaWithImagejson['features'][i]['properties']['LatMin_eco'],serbiaWithImagejson['features'][i]['properties']['LongMax_ec']]]).addTo(map);
+                              [serbiaWithImagejson['features'][i]['properties']['LatMin_eco'],serbiaWithImagejson['features'][i]['properties']['LongMax_ec']]],{zIndex:200}).addTo(map);
 }
 
