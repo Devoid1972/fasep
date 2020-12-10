@@ -19,6 +19,16 @@
   src: URL('Fonts/Agency FB.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'caviar dreams';
+  src: URL('Fonts/CaviarDreams.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'caviar dreams bold';
+  src: URL('Fonts/CaviarDreams_Bold.ttf') format('truetype');
+}
+
 .pad{width:775px;
   height: 1225px;
 margin-left: auto;
@@ -296,33 +306,33 @@ box-shadow: black 0px 0px 5px;
 
   <div id="explanation" class="explanation-text">
 
-    <p> On this map, we used three indicators :</p>
+    <p>Ova mapa prikazuje zdravlje lokalnih sredina, koristeći tri indikatora:</p>
 
-    <center><img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'> Water management<img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'></center>
+    <center><img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'> Vodoprivrede <img src="Cartes/Illu_popup/Picto-goutte.png" width='30px'></center>
 
-    <p> Calculated from Aqueduct Global Maps 3.0 (Overall Water Risk layer). The different risk levels from 0 to 5 are reduced from 0 to 10 and then intersected with a hexagonal mesh of 20 km on the side which calculates the average of all the pixels of the mesh.</p>
+    <p>Za svaku heksagonalnu pločicu rizici povezani sa vodom (poput poplave, kvaliteta i količine vode) izračunavaju se od 0 do 10.</p>
 
-    <center><img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'> Protected areas<img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'></center>
+    <center><img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'> Zaštićena područja<img src="Cartes/Illu_popup/Picto-arbre.png" width='30px'></center>
 
-    <p> Calculated from the World Database on Protected Area. A weighting game is used to calculate the weights of the International, National or Regional protected areas (excluding only maritime areas). The rating is even stronger if the space has several levels of protection.</p>
+    <p>Svaka pločica je ocenjena prema stepenu zaštite. Što je jača zaštita, to je bolja ocena. Ako neko područje kombinuje različite izvore zaštite (lokalni, nacionalni ili međunarodni), njegova ocena je takođe veća.</p>
 
-    <center><img src="Cartes/Illu_popup/Picto-urban.png" width='30px'> Urbanisation<img src="Cartes/Illu_popup/Picto-urban.png" width='30px'></center>
+    <center><img src="Cartes/Illu_popup/Picto-urban.png" width='30px'> Ubranizacija <img src="Cartes/Illu_popup/Picto-urban.png" width='30px'></center>
 
-    <p> Calculated from GHS-SMOD data at one km resolution. The values of urban densities are noted from 0 to 10 then one intersects with a hexagonal mesh of 20km of side which calculates the average of all the pixels of the mesh.</p>
+    <p>Ovde se urbane gustine izračunavaju od 0 do 10 za svaku pločicu. 10 predstavlja divlje i netaknuto zemljište, dok 0 označava potpuno urbanizovano područje.</p>
 
-    <p> We then used the mean value of those three indicators in a polygon to plot the health level of a zone : </p>
+    <p>Zatim izračunavamo prosek ta tri indikatora za svaku pločicu, kako bismo na kraju ucrtali nivo ekološkog zdravlja područja koje predstavlja. Imajte na umu da je površina svake heksagonalne ploče 20 kvadratnih kilometara.</p>
 
-    <img src="Cartes/Bio_carte_eco/Tile-ecosante-A@300x.png" style="margin-left:70px;" width='30px'> level A (mean greater than 6.5), <br>
-    <img src="Cartes/Bio_carte_eco/Tile-ecosante-B@300x.png" style="margin-left:70px;" width='30px'> level B (mean between 5.5 and 6.5), <br>
-    <img src="Cartes/Bio_carte_eco/Tile-ecosante-C@300x.png" style="margin-left:70px;" width='30px'> level C (mean between 4.8 and 5.5), <br>
-    <img src="Cartes/Bio_carte_eco/Tile-ecosante-D@300x.png" style="margin-left:70px;" width='30px'> level D (mean between 4.1 and 4.8), <br>
-    <img src="Cartes/Bio_carte_eco/Tile-ecosante-E@300x.png" style="margin-left:70px;" width='30px'> level E (mean less than 4.1). <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-A@300x.png" style="margin-left:70px;" width='30px'> nivo A (prosek veći od 6.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-B@300x.png" style="margin-left:70px;" width='30px'> nivo B (prosek između 5.5 i 6.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-C@300x.png" style="margin-left:70px;" width='30px'> nivo C (prosek između 4.8 i 5.5), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-D@300x.png" style="margin-left:70px;" width='30px'> nivo D (prosek između 4.1 i 4.8), <br>
+    <img src="Cartes/Bio_carte_eco/Tile-ecosante-E@300x.png" style="margin-left:70px;" width='30px'> nivo E (prosek niži od 4.1). <br>
 
-    <p> Click on a polygon to get details </p>
+    <p>Pritisnite na pločicu kako biste biste saznali više detalja. </p>
 
-    <p>Click on ? to get help.</p>
+    <p>Pritisnite na ? biste dobili pomoć</p>
 
-    <p>Click on the arrow on the right to close this window.</p>
+    <p>Pritisnite strelicu sa desne strane da zatvorite ovaj prozor.</p>
 
   </div>
 
